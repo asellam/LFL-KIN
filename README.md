@@ -24,6 +24,7 @@ The sub-directory **Test-Using-SVM** is dedicated for this
 1. Modify the Variables: Kinset (line 19) and Kinship (line 21)
 1. Run the code
 1. The program will return the performance of SVM's NuSVC with different nu values.
+
 **You can easily test the feature extraction method using other types of classifiers, you just need to Modify the part where we create SVM classifiers and fit it to training data (Lines 103 and 105) then change 'model.predict' to your classifiers prediction routine (line 110)**
 
 # Important
