@@ -15,6 +15,7 @@ import numpy as np
 import random as rd
 import tensorflow as tf
 from LoadData import LoadFoldGrayScale as LoadFold
+from LoadData import SaveToCSV
 # Set Random Iterator's initial value depending on current time, this Results
 # in different random values each execusion
 rd.seed(time.time())
@@ -282,7 +283,7 @@ for Fold in range(1,nFold+1):
         (Th1,Perf1)=ThreshPerf(d1,K1,N1)
         # If the best test performance (in which we are interested) for this
         # trial is better than the last one, then updated best results of this
-        # fold
+        # fold and save the feature-extraction matrix Learned
         if(Perf1>Best[4]):
             Best[0]=E
             Best[1]=TrainLoss
@@ -290,10 +291,10 @@ for Fold in range(1,nFold+1):
             Best[3]=Perf0
             Best[4]=Perf1
             if KinSet=="KinFaceW-I":
-                FileNameM="./M_"+FileID+"_"+KinShip+"-I_%d"%(Fold)+".csv"
+                FileNameM="./M_"+KinShip+"-I_%d"%(Fold)+".csv"
             else:
-                FileNameM="./M_"+FileID+"_"+KinShip+"-II_%d"%(Fold)+".csv"
-            data.SaveToCSV(M,FileNameM)
+                FileNameM="./M_"+KinShip+"-II_%d"%(Fold)+".csv"
+            SaveToCSV(M,FileNameM)
         # Terminate the Tensorflow's session created earlier
         ss.close()
         # Output results to result's csv file

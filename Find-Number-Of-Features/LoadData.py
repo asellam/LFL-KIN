@@ -104,3 +104,13 @@ def LoadFoldGrayScale(KinSet,KinShip,Fold):
     #Returns: Train parent images, train child images, train labels,
     #         Test parent images, test child images, test labels
     return (np.array(P0),np.array(C0),np.array(TrainY),np.array(P1),np.array(C1),np.array(TestY))
+
+def SaveToCSV(M,FileName):
+    s=M.shape
+    file=open(FileName,"w")
+    for i in range(s[0]):
+        Line="%f"%(M[i][0])
+        for j in range(1,s[1]):
+            Line=Line+";%f"%(M[i][j])
+        file.write(Line+"\n")
+    file.close()
