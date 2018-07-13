@@ -16,7 +16,7 @@ This script is designed to run from a shell batch file to avoid memory garbage-c
 1. Run from Command Line Prompt: LFL-KIN.py (Q) (KinFaceW-I|KinFaceW-II) (fs|ms|fd|md)
  OR
 1. Run using the batch file: RunCode.bat, this will run all the tests automatically. RunCode.bat is an example of a batch file (Tested on windows)
-## Test the feature extraction matrix using SVM
+## Test the feature extraction method using SVM
 The sub-directory **Test-Using-SVM** is dedicated for this
 1. Use **Find-Number-Of-Features/LFL-KIN.py** to find the best number of Features Q'
 1. Use **Find-Number-Of-Features/LFL-KIN.py** again with Q=Q' to obtain the feature extraction matrices for different folds
@@ -24,7 +24,7 @@ The sub-directory **Test-Using-SVM** is dedicated for this
 1. Modify the Variables: Kinset (line 19) and Kinship (line 21)
 1. Run the code
 1. The program will return the performance of SVM's NuSVC with different nu values.
-## Test the feature extraction matrix using SVM
+**You can easily test the feature extraction method using other types of classifiers, you just need to Modify the part where we create SVM classifiers and fit it to training data (Lines 103 and 105) then change 'model.predict' to your classifiers prediction routine (line 110)**
 
 # Important
 Before running the code make sure to:
