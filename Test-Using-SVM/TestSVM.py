@@ -16,7 +16,7 @@ import random as rd
 from sklearn import svm
 from LoadData import LoadFoldGrayScale as LoadFold
 # KinfaceW dataset (KinFaceW-I or KinFaceW-II)
-KinSet="KinFaceW-I"
+KinSet="KinFaceW-II"
 # KinfaceW subset (relationship: fs, fd, ms or md)
 KinShip="fs"
 # Number of folds in K-Fold-Cross-Validation
