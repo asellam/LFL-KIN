@@ -37,17 +37,17 @@ ValidTh=0.0001
 # Number of Training Trials for this number of features: The program will run
 # the training this number of times and returns best performance
 nTrial=1
-# Best-Threshold-Search step: After learning the distance matrix with this Number
+# Best-Threshold-Search step: After learning the feature matrix with this Number
 # of features, we must judge its performance on test data in order to find the
 # best number of features.
-# The best distance matrix (best number of feautres) is the one that seperate
-# the two classes (positive/negative) the best, i.e: a threshold on distance
+# The best feature matrix (best number of feautres) is the one that seperate
+# the two classes (positive/negative) the best, i.e: a threshold on distances
 # that best seperate positive and negative pairs must be found an then the
 # Accuracy of this threshold is outputed as the performance of this number of
 # features.
 # The number of features with the best performance will be choosen
 SearchT=1000
-# Range of initial random values of the distance matrix
+# Range of initial random values of the feature extraction matrix
 MinRand=-0.01
 MaxRand=+0.01
 # Learning Rate for the Gradient Descent algorithm
@@ -61,7 +61,7 @@ nFold=5
 def RandomVal():
     return rd.random()*(MaxRand-MinRand)+MinRand
 
-# Returns the best threshold for this distance metric
+# Returns the best threshold for this feature matrix
 # D: List of distances of all pairs
 # K: Kinship class (positive/negative) of all pairs (same order as D)
 # N: Number pairs (for D and K)
@@ -154,7 +154,7 @@ for Fold in range(1,nFold+1):
     for TR in range(nTrial):
         # Initialize a Tensorflow session
         ss=tf.Session()
-        # Make the initial random distance matrix
+        # Make the initial random feature matrix
         A0=[]
         for i in range(M0):
             Z=[]
@@ -170,7 +170,7 @@ for Fold in range(1,nFold+1):
             T = tf.placeholder(tf.float32,shape=(None,))
             # A Tensor that holds the number of pairs
             L = tf.placeholder(dtype=tf.int32)
-            # A Tensor Variable that contains the distance metric's matrix
+            # A Tensor Variable that contains the feature metric's matrix
             A = tf.Variable(A0,dtype=tf.float32)
 
             # A tensorflow's Variables' initializer
@@ -188,13 +188,13 @@ for Fold in range(1,nFold+1):
                 x = D[i]
                 # i^th pair's KinShip class
                 t = T[i]
-                # multiply the gray-scale-difference by distance matrix A
+                # multiply the gray-scale-difference by feature matrix A
                 #  ~ Equivalent to P[i]*A-C[i]*A
                 T1 = tf.matmul(x,A)
                 # Element-wise square of x*A
                 T3 = tf.square(T1)
                 # Overall sum of squared differences after multiplication by
-                # the distance matrix (Equivalent to square of euclidian distance
+                # the feature matrix (Equivalent to square of euclidian distance
                 # between images of a signle pair that were transformed by matrix A)
                 d = tf.reduce_sum(T3)
                 # if this is a positive pair then
@@ -255,7 +255,7 @@ for Fold in range(1,nFold+1):
                 # Increment epoch's counter
                 E=E+1
         # Results
-        # M: Learned distance metric's matrix
+        # M: Learned feature metric's matrix
         # L: Learning Loss
         M, L = ss.run([A, loss], {D: D0, T:K0, L:N0})
 
