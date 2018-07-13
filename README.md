@@ -15,7 +15,15 @@ The sub-directory **Find-Number-Of-Features** is dedicated for this
 This script is designed to run from a shell batch file to avoid memory garbage-collecting errors (memory allocated by tensorflow not getting cleaned)
 1. Run from Command Line Prompt: LFL-KIN.py (Q) (KinFaceW-I|KinFaceW-II) (fs|ms|fd|md)
  OR
-2. Run using the batch file: RunCode.bat, this will run all the tests automatically. RunCode.bat is an example of a batch file (Tested on windows)
+1. Run using the batch file: RunCode.bat, this will run all the tests automatically. RunCode.bat is an example of a batch file (Tested on windows)
+## Test the feature extraction matrix using SVM
+The sub-directory **Test-Using-SVM** is dedicated for this
+1. Use **Find-Number-Of-Features/LFL-KIN.py** to find the best number of Features Q'
+1. Use **Find-Number-Of-Features/LFL-KIN.py** again with Q=Q' to obtain the feature extraction matrices for different folds
+1. Put the obtained feature extraction matrices in this directory **Test-Using-SVM**
+1. Modify the Variables: Kinset (line 19) and Kinship (line 21)
+1. Run the code
+1. The program will return the performance of SVM's NuSVC with different nu values.
 ## Test the feature extraction matrix using SVM
 
 # Important

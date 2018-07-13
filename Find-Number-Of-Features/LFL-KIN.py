@@ -1,6 +1,9 @@
 #----------------------------------------------------------------
 #- Linear Feature Learning for Kinship Verification in the Wild -
 #----------------------------------------------------------------
+#----------------------------------------------------------------
+#- Find the best number of features                             -
+#----------------------------------------------------------------
 #- By: Abdellah SELLAM                                          -
 #-     Hamid AZZOUNE                                            -
 #----------------------------------------------------------------
@@ -137,14 +140,25 @@ for Fold in range(1,nFold+1):
     # Item 4: Training Accuracy
     # Item 5: Test Accuracy
     Best=[0.0,0.0,0.0,0.0,0.0]
-    # Loads a Train/Test pairs of this fold
+    # Loads the Train/Test pairs of this fold
+    # Inputs:
+    #   KinSet: KinFaceW dataset (KinFaceW-I or KinFaceW-II)
+    #   Kinship: KinFaceW subset (fs, fd, ms or md)
+    #   Fold: K-Fold-Cross-Validation's fold
+    # Outputs:
+    #   P0: Gray-Scale images of parents (Training data)
+    #   C0: Gray-Scale images of children (Training data)
+    #   K0: Kinship label (positive/negative) (Training data)
+    #   P1: Gray-Scale images of parents (Test data)
+    #   C1: Gray-Scale images of children (Test data)
+    #   K1: Kinship label (positive/negative) (Test data)
     (P0,C0,K0,P1,C1,K1)=LoadFold(KinSet,KinShip,Fold)
     # N0: Number of train pairs
-    # a: 2 (2 images in each pair)
+    # a: 1
     # M0: Number of gray-scale pixels in each image
     (N0,a,M0)=P0.shape
     # N1: Number of test pairs
-    # a: 2 (2 images in each pair)
+    # b: 1
     # M1: Number of gray-scale pixels in each image
     (N1,b,M1)=P1.shape
     # Difference between gray-scale images of a pair (parent/child)
@@ -260,14 +274,16 @@ for Fold in range(1,nFold+1):
         M, L = ss.run([A, loss], {D: D0, T:K0, L:N0})
 
         # Search best threshold
-        # d0: Gray-scale-differences on training samples
+        # d0: distances after multiplication by the feature extraction matrix
+        #     (Training data)
         d0=[]
         for i in range(N0):
             Z=np.matmul(P0[i],M)
             W=np.matmul(C0[i],M)
             d0.append(np.linalg.norm(Z-W))
 
-        # d4: Gray-scale-differences on test samples
+        # d1: distances after multiplication by the feature extraction matrix
+        #     (Test data)
         d1=[]
         for i in range(N1):
             Z=np.matmul(P1[i],M)
@@ -283,7 +299,7 @@ for Fold in range(1,nFold+1):
         (Th1,Perf1)=ThreshPerf(d1,K1,N1)
         # If the best test performance (in which we are interested) for this
         # trial is better than the last one, then updated best results of this
-        # fold and save the feature-extraction matrix Learned
+        # fold and save the feature-extraction matrix Learned from this fold
         if(Perf1>Best[4]):
             Best[0]=E
             Best[1]=TrainLoss
