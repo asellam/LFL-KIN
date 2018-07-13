@@ -10,9 +10,11 @@ Abdellah SELLAM and Hamid AZZOUNE, Linear Feature Learning for Kinship verificat
 4. Scipy (pip install scipy)
 
 # How To Use
+## Find the number of feature
+This script is designed to run from a shell batch file to avoid memory garbage-collecting errors (memory allocated by tensorflow not getting cleaned)
 1. Run from Command Line Prompt: LFL-KIN.py (Q) (KinFaceW-I|KinFaceW-II) (fs|ms|fd|md)
  OR
-2. Run using the batch file: RunCode.bat, this will run all the tests automatically.
+2. Run using the batch file: RunCode.bat, this will run all the tests automatically. RunCode.bat is an example of a batch file (Tested on windows)
 
 # Important
 Before running the code make sure to:
